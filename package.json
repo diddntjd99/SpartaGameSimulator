@@ -1,0 +1,19 @@
+{
+  "name": "SpartaGameSimulator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/diddntjd99/SpartaGameSimulator.git",
+  "author": "diddntjd99 <diddntjd99@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write *.js **/*.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
