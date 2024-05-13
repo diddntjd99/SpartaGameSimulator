@@ -5,7 +5,7 @@ const connect = () => {
   mongoose
     .connect(
       // 빨간색으로 표시된 부분은 대여한 ID, Password, 주소에 맞게끔 수정해주세요!
-      'mongodb+srv://diddntjd99:qwe123@sparta.ut8vdex.mongodb.net/?retryWrites=true&w=majority&appName=Sparta',
+      '.evn 파일로 옮겨서 수정 필요',
       {
         dbName: 'sparta_game_simulator', // node_lv1 데이터베이스명을 사용합니다.
       }
