@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 const connect = () => {
+  //.env 환경변수 사용을 위한 dotenv 패키지 사용
+  dotenv.config();
   // mongoose.connect는 MongoDB 서버에 연결하는 메서드입니다.
   mongoose
-    .connect(
-      // 빨간색으로 표시된 부분은 대여한 ID, Password, 주소에 맞게끔 수정해주세요!
-      '.evn 파일로 옮겨서 수정 필요',
-      {
-        dbName: 'sparta_game_simulator', // node_lv1 데이터베이스명을 사용합니다.
-      }
-    )
+    .connect(process.env.DATABASE_URL, {
+      dbName: 'game_simulator', // 데이터베이스명
+    })
     .then(() => console.log('MongoDB 연결에 성공하였습니다.'))
     .catch((err) => console.log(`MongoDB 연결에 실패하였습니다. ${err}`));
 };

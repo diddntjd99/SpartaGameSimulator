@@ -17,7 +17,7 @@ router.post('/items', async (req, res, next) => {
       .json({ errorMessage: '아이템 스탯 데이터가 존재하지 않습니다.' });
   }
 
-  const items = await Items.find({ item_code: item_code }).exec();
+  const items = await Items.find({ item_name: item_name }).exec();
   if (items.length) {
     return res
       .status(400)
