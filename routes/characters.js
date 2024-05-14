@@ -1,5 +1,6 @@
 import express from 'express';
 import Characters from '../schemas/characters.schema.js';
+import Equipments from '../schemas/equipment.schema.js';
 
 const router = express.Router();
 
@@ -30,6 +31,12 @@ router.post('/characters', async (req, res, next) => {
     power: 100,
   });
   await createCharacters.save();
+
+  //장비 데이터도 캐릭터 id를 값으로 함께 생성
+  const createEquipments = new Equipments({
+    character: createCharacters,
+  });
+  await createEquipments.save();
 
   return res.status(201).json({ characters: createCharacters });
 });
@@ -64,6 +71,9 @@ router.delete('/characters/:character_Id', async (req, res, next) => {
   }
 
   await Characters.deleteOne({ character_id: character_Id });
+
+  //장비 데이터도 캐릭터 id를 값으로 함께 삭제
+  await Equipments.deleteOne({ character: character._id });
 
   return res.status(200).json({});
 });

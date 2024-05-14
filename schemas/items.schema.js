@@ -14,11 +14,9 @@ const itemsSchema = new mongoose.Schema({
   item_stat: {
     health: {
       type: Number,
-      required: true,
     },
     power: {
       type: Number,
-      required: true,
     },
   },
 });

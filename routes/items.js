@@ -81,6 +81,7 @@ router.patch('/items/:item_code', async (req, res, next) => {
       .json({ errorMessage: '수정할 아이템 데이터가 존재하지 않습니다.' });
   }
 
+  //req.body에 입력된 값이 있어야지 수정
   if (item_name) {
     item.item_name = item_name;
   }
