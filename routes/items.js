@@ -3,6 +3,7 @@ import Items from '../schemas/items.schema.js';
 
 const router = express.Router();
 
+// 아이템 생성 API
 router.post('/items', async (req, res, next) => {
   const { item_name, item_stat } = req.body;
 
@@ -35,6 +36,23 @@ router.post('/items', async (req, res, next) => {
   await createItems.save();
 
   return res.status(201).json({ Items: createItems });
+});
+
+// 아이템 하나 조회 API
+router.get('/items/:item_code', async (req, res, next) => {
+  const { item_code } = req.params;
+  const item = await Items.findOne({
+    item_code: item_code,
+  }).exec();
+
+  return res.status(200).json({ item });
+});
+
+// 아이템 목록 조회 API
+router.get('/items', async (req, res, next) => {
+  const items = await Items.find().sort('item_code').exec();
+
+  return res.status(200).json({ items });
 });
 
 export default router;
