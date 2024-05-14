@@ -1,5 +1,7 @@
 import express from 'express';
 import Items from '../schemas/items.schema.js';
+import Characters from '../schemas/characters.schema.js';
+import Equipments from '../schemas/equipment.schema.js';
 
 const router = express.Router();
 
@@ -101,18 +103,49 @@ router.patch('/items/:item_code', async (req, res, next) => {
         .json({ errorMessage: '수정할 아이템 데이터가 존재하지 않습니다.' });
     }
 
+    let old_health, old_power;
+
     //req.body에 입력된 값이 있어야지 수정
     if (item_name) {
       item.item_name = item_name;
     }
     if (health) {
+      old_health = item.item_stat.health;
       item.item_stat.health = health;
     }
     if (power) {
+      old_power = item.item_stat.power;
       item.item_stat.power = power;
     }
 
     await item.save();
+
+    //현재 수정한 아이템을 장착중인 캐릭터가 있다면 수정된 스탯으로 캐릭터 스탯 수정
+    const equipments = await Equipments.find({ item: item._id })
+      .populate('character')
+      .populate('item')
+      .exec();
+
+    if (equipments.length > 0) {
+      for (let i = 0; i < equipments.length; i++) {
+        const character = await Characters.findOne({
+          _id: equipments[i].character,
+        }).exec();
+
+        if (health) {
+          character.health -= old_health;
+          character.health += health;
+        }
+        if (power) {
+          character.power -= old_power;
+          character.power += power;
+        }
+
+        if (health || power) {
+          await character.save();
+        }
+      }
+    }
 
     return res.status(200).json({});
   } catch (error) {
