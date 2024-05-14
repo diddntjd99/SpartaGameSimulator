@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 const connect = () => {
-  //.env 환경변수 사용을 위한 dotenv 패키지 사용
+  //.env 환경변수 사용을 위한 dotenv 패키지
   dotenv.config();
   // mongoose.connect는 MongoDB 서버에 연결하는 메서드입니다.
   mongoose
