@@ -45,6 +45,12 @@ router.get('/items/:item_code', async (req, res, next) => {
     item_code: item_code,
   }).exec();
 
+  if (!item) {
+    return res
+      .status(404)
+      .json({ errorMessage: '존재하지 않는 아이템입니다.' });
+  }
+
   return res.status(200).json({ item });
 });
 
@@ -53,6 +59,41 @@ router.get('/items', async (req, res, next) => {
   const items = await Items.find().sort('item_code').exec();
 
   return res.status(200).json({ items });
+});
+
+// 아이템 수정 API
+router.patch('/items/:item_code', async (req, res, next) => {
+  const { item_code } = req.params;
+  const { item_name, health, power } = req.body;
+  const item = await Items.findOne({
+    item_code: item_code,
+  }).exec();
+
+  if (!item) {
+    return res
+      .status(404)
+      .json({ errorMessage: '존재하지 않는 아이템입니다.' });
+  }
+
+  if (!item_name && !health && !power) {
+    return res
+      .status(400)
+      .json({ errorMessage: '수정할 아이템 데이터가 존재하지 않습니다.' });
+  }
+
+  if (item_name) {
+    item.item_name = item_name;
+  }
+  if (health) {
+    item.item_stat.health = health;
+  }
+  if (power) {
+    item.item_stat.power = power;
+  }
+
+  await item.save();
+
+  return res.status(200).json({});
 });
 
 export default router;
