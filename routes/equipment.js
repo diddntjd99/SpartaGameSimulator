@@ -27,7 +27,7 @@ router.get('/characters/equipments/:character_Id', async (req, res, next) => {
       .populate('item')
       .exec();
 
-    return res.status(200).json({ equipment });
+    return res.status(200).json({ equipments: equipment.item });
   } catch (error) {
     next(error);
   }
@@ -64,11 +64,13 @@ router.patch('/characters/equipments/:character_Id', async (req, res, next) => {
 
     const equipments = await Equipments.findOne({
       character: character._id,
-    }).populate('item');
+    })
+      .populate('item')
+      .exec();
 
     const item = await Items.findOne({
       item_code: item_code,
-    });
+    }).exec();
 
     if (!item) {
       return res

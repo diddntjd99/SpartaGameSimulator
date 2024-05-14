@@ -35,7 +35,7 @@ router.post('/characters', async (req, res, next) => {
 
     //장비 데이터도 캐릭터 id를 값으로 함께 생성
     const createEquipments = new Equipments({
-      character: createCharacters,
+      character: createCharacters._id,
     });
     await createEquipments.save();
 
