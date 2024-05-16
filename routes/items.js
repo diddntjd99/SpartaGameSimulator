@@ -103,6 +103,15 @@ router.patch('/items/:item_code', async (req, res, next) => {
         .json({ errorMessage: '수정할 아이템 데이터가 존재하지 않습니다.' });
     }
 
+    const equalsNAmeItem = await Items.findOne({ item_name: item_name }).exec();
+    if (equalsNAmeItem) {
+      if (equalsNAmeItem.item_code !== item.item_code) {
+        return res
+          .status(400)
+          .json({ errorMessage: '이미 존재하는 아이템입니다.' });
+      }
+    }
+
     let old_health, old_power;
 
     //req.body에 입력된 값이 있어야지 수정
