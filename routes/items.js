@@ -18,6 +18,11 @@ router.post('/items', async (req, res, next) => {
     if (!item_stat) {
       return res
         .status(400)
+        .json({ errorMessage: '아이템 스탯 데이터가 옳바르지 않습니다.' });
+    }
+    if (!item_stat.health && !item_stat.power) {
+      return res
+        .status(400)
         .json({ errorMessage: '아이템 스탯 데이터가 존재하지 않습니다.' });
     }
 
