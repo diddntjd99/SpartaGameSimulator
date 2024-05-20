@@ -1,5 +1,7 @@
 # SpartaGameSimulator
 
+.evn 파일 생성 필요: DATABASE_URL=MongoDB URL
+
 ## API 명세서
 
 | 기능                         | Method | URL                                      | 요청(req)                                                                               | 응답(res)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
